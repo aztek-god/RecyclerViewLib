@@ -1,6 +1,8 @@
 package pj.sdv.com.recyclerviewlib.list
 
-class ObservableArrayList<T>(private val onChangeListener: OnChangeListener<T>) : ArrayList<T>() {
+import java.lang.RuntimeException
+
+internal class ObservableArrayList<T>(private val onChangeListener: OnChangeListener<T>) : ArrayList<T>() {
     interface OnChangeListener<T> {
         fun onChange(oldList: Collection<T>, newList: Collection<T>)
     }
@@ -9,13 +11,23 @@ class ObservableArrayList<T>(private val onChangeListener: OnChangeListener<T>) 
 
     private var mOldData: ArrayList<T>? = null
 
-    fun enableTransaction() {
+    fun beginTransaction() {
+        if (isTransaction) {
+            throw RuntimeException("The beginTransaction() method has been invoked twice.")
+        }
         isTransaction = true
         mOldData = ArrayList(this)
     }
 
-    fun disableTransaction() {
+    fun commit() {
+        if (!isTransaction) {
+            throw RuntimeException("The commit() method has been invoked twice.")
+        }
+
         isTransaction = false
+        mOldData?.let {
+            onChangeListener.onChange(it, this)
+        }
         mOldData = null
     }
 
