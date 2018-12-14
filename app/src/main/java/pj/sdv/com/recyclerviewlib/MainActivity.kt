@@ -11,11 +11,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val list: ObservableArrayList<String> =
-            ObservableArrayList(object : ObservableArrayList.OnChangeListener<String> {
-                override fun onChange(oldList: Collection<String>, newList: Collection<String>) {
-                    Log.d("sdvStark2", "oldList = $oldList, newList = $newList")
-                }
-            })
+//        val list: ObservableArrayList<String> =
+//            ObservableArrayList(object : ObservableArrayList.OnChangeListener<String> {
+//                override fun onChange(oldList: Collection<String>, newList: Collection<String>) {
+//                    Log.d("sdvStark2", "oldList = $oldList, newList = $newList")
+//                }
+//            })
+
     }
 }

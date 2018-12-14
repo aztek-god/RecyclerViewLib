@@ -2,7 +2,13 @@ package pj.sdv.com.recyclerviewlib.list
 
 import java.lang.RuntimeException
 
-internal class ObservableArrayList<T>(private val onChangeListener: OnChangeListener<T>) : ArrayList<T>() {
+internal class ObservableArrayList<T>(
+    collection: Collection<T>? = null,
+    private val onChangeListener: OnChangeListener<T>
+) : ArrayList<T>(collection ?: mutableListOf()) {
+
+    constructor(onChangeListener: OnChangeListener<T>) : this(null, onChangeListener)
+
     interface OnChangeListener<T> {
         fun onChange(oldList: Collection<T>, newList: Collection<T>)
     }
